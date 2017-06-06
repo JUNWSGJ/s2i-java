@@ -40,8 +40,10 @@ manage_incremental_build
 # so run maven.
 if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # the subdirectory within LOCAL_SOURCE_DIR from where we should copy build
-  # artifacts (*.war, *.jar)
+  # artifacts dir (mode1/target, model2/target)
   ARTIFACT_DIR=${ARTIFACT_DIR:-target}
+  # artifacts type (*.war; *.jar)
+  ARTIFACT_TYPE=${ARTIFACT_DIR:-jar}
 
   pushd $LOCAL_SOURCE_DIR &> /dev/null
 
@@ -121,6 +123,14 @@ else
   ARTIFACT_DIR=${ARTIFACT_DIR:-.}
 
   copy_artifacts "$ARTIFACT_DIR" jar
+fi
+
+
+buildType=$(echo "${MAVEN_BUILD_PIPELINE_TYPE}" | tr [:upper:] [:lower:])
+
+if [ "${buildType}" == "true" ]; then
+
+
 fi
 
 # As Microservices you should only have 1 fat jar
