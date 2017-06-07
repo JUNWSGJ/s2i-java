@@ -45,7 +45,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # artifacts type (war; jar)
   ARTIFACT_TYPE=${ARTIFACT_TYPE:-jar}
 
-  echo "dir is ${ARTIFACT_TYPE}, and file type is ${ARTIFACT_TYPE}"
+  echo "dir is ${ARTIFACT_DIR}, and file type is ${ARTIFACT_TYPE}"
 
   pushd $LOCAL_SOURCE_DIR &> /dev/null
 
@@ -71,7 +71,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # Copy built artifacts (if any!) from the target/ directory
   # (or $ARTIFACT_DIR if specified)
   # to the $DEPLOY_DIR directory for later deployment
-  copy_artifacts "$ARTIFACT_DIR" jar
+  copy_artifacts "$ARTIFACT_DIR" "$ARTIFACT_TYPE"
 
   # optionally clear the local maven repository after the build
   clear_maven_repository
