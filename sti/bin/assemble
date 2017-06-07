@@ -43,7 +43,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # artifacts dir (mode1/target, model2/target)
   ARTIFACT_DIR=${ARTIFACT_DIR:-target}
   # artifacts type (war; jar)
-  ARTIFACT_TYPE=${ARTIFACT_DIR:-jar}
+  ARTIFACT_TYPE=${ARTIFACT_TYPE:-jar}
 
   pushd $LOCAL_SOURCE_DIR &> /dev/null
 
@@ -137,23 +137,21 @@ if [ "${buildType}" == "true" ]; then
     echo "[INFO] Copying ${DEPLOY_DIR}/*${APP_SUFFIX}.war into ${DEPLOY_DIR}/"
     cp ${DEPLOY_DIR}/*${APP_SUFFIX}.war ${DEPLOY_DIR}/    
   else
+    echo "[ERROR] No jar or war file located in ${DEPLOY_DIR}"
+    exit 1
+  fi
+else
+  # As Microservices you should only have 1 fat jar
+  # if compgen -G "/tmp/src/*" >/dev/null; then
+  # TODO: Review how best move these
+  if [ $(ls ${DEPLOY_DIR}/*${APP_SUFFIX}.jar | wc -l) -eq 1 ]; then
+    echo "[INFO] Copying ${DEPLOY_DIR}/*${APP_SUFFIX}.jar into ${DEPLOY_DIR}/app.jar"
+    cp ${DEPLOY_DIR}/*${APP_SUFFIX}.jar ${DEPLOY_DIR}/app.jar
+    [ ! -f ${DEPLOY_DIR}/app.jar ] && echo "Application could not be properly built." && exit 1
+    echo "[INFO] Application jar file is located in ${DEPLOY_DIR}/app.jar"
+  else
     echo "[ERROR] No app.jar file located in ${DEPLOY_DIR}"
     exit 1
   fi
-
 fi
-
-# As Microservices you should only have 1 fat jar
-# if compgen -G "/tmp/src/*" >/dev/null; then
-# TODO: Review how best move these
-if [ $(ls ${DEPLOY_DIR}/*${APP_SUFFIX}.jar | wc -l) -eq 1 ]; then
-  echo "[INFO] Copying ${DEPLOY_DIR}/*${APP_SUFFIX}.jar into ${DEPLOY_DIR}/app.jar"
-  cp ${DEPLOY_DIR}/*${APP_SUFFIX}.jar ${DEPLOY_DIR}/app.jar
-  [ ! -f ${DEPLOY_DIR}/app.jar ] && echo "Application could not be properly built." && exit 1
-  echo "[INFO] Application jar file is located in ${DEPLOY_DIR}/app.jar"
-else
-  echo "[ERROR] No app.jar file located in ${DEPLOY_DIR}"
-  exit 1
-fi
-
 exit 0
