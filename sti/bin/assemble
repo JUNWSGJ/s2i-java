@@ -45,6 +45,8 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # artifacts type (war; jar)
   ARTIFACT_TYPE=${ARTIFACT_TYPE:-jar}
 
+  echo "dir is ${ARTIFACT_TYPE}, and file type is ${ARTIFACT_TYPE}"
+
   pushd $LOCAL_SOURCE_DIR &> /dev/null
 
   MAVEN_ARGS=${MAVEN_ARGS--e -Popenshift -DskipTests -Dcom.redhat.xpaas.repo.redhatga package}
