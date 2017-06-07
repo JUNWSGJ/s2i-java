@@ -42,7 +42,7 @@ if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
   # the subdirectory within LOCAL_SOURCE_DIR from where we should copy build
   # artifacts dir (mode1/target, model2/target)
   ARTIFACT_DIR=${ARTIFACT_DIR:-target}
-  # artifacts type (*.war; *.jar)
+  # artifacts type (war; jar)
   ARTIFACT_TYPE=${ARTIFACT_DIR:-jar}
 
   pushd $LOCAL_SOURCE_DIR &> /dev/null
