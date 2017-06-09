@@ -47,6 +47,10 @@ COPY ./sti/bin/ /usr/local/sti
 
 RUN chown -R 1001:1001 /opt/openshift
 
+# set timze to "Asia/Shanghai"
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # This default user is created in the openshift/base-centos7 image
 USER 1001
 
