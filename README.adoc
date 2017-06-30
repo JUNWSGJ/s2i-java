@@ -39,6 +39,7 @@ BUILDER_ARGS="build -x test"
 
 ----
 oc create -f https://raw.githubusercontent.com/jorgemoralespou/s2i-java/master/ose3/s2i-java-imagestream.json
+oc new-build https://github.com/wulliam/s2i-java.git --context-dir=/1.0 --strategy=docker --to=s2i-java -n openshift
 ----
 
 * Once the builder s2i-java has been registered, you can create an app with:
